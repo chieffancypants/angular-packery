@@ -159,6 +159,14 @@
       });
     };
 
+    this.removeObject = function (el) {
+      var promise = service.Packery(self.uniqueId);
+      promise.then(function () {
+        self.packery.remove(el);
+        self.packery.layout();
+      });
+    };
+
     this.setDraggable = function (handle) {
       self.packeryDraggable = true;
       self.dragHandle = handle;
@@ -253,6 +261,10 @@
 
         // Packs individual objects
         controller.packObject(element);
+
+        scope.$on('$destroy', function () {
+          controller.removeObject(element);
+        });
       }
     };
   };
